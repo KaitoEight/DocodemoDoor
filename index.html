@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cánh cửa thần kỳ Doraemon</title>
+  <style>
+    body {
+      background-image: url("img/nobitaroom.jpg");
+      background-repeat: no-repeat;
+      background-position: 50% 20%;
+      background-position-x: center;
+      background-position-y: 20%;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+    }
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    select {
+      padding: 10px;
+      margin: 15px;
+      border-radius: 5px;
+    }
+
+    .door-wrap {
+      width: 280px;
+      height: 500px;
+      margin: 40px auto;
+      position: relative;
+      perspective: 1200px; /* Tạo cảm giác 3D */
+    }
+
+    .backdrop {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 245px;
+      height: 450px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .door {
+      width: 100%;
+      height: 100%;
+      transform-origin: left center; /* bản lề bên trái */
+      transition: transform 1s cubic-bezier(.2,.9,.2,1);
+      transform-style: preserve-3d;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Class .open để click mở cửa */
+    .door.open {
+      transform: rotateY(-100deg);
+    }
+
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: pink;
+      font-weight: bold;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2> Cánh cửa thần kỳ Doraemon </h2>
+  <label>Chọn địa điểm: </label>
+  <select id="location">
+    <option value="img/theb.jpg">The B</option>
+    <option value="img/uth.png">UTH</option>
+    <option value="img/uitpng.jpg">UIT</option>
+    <option value="img/bku.jpg">BKU</option>
+  </select>
+  <br>
+  <button id="toggle">Mở/Đóng cửa</button>
+
+  <div class="door-wrap">
+    <div class="backdrop" id="door-bg"></div>
+
+    <!-- Cửa SVG -->
+    <div class="door" id="door">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 700" width="280" height="500">
+        <defs>
+          <linearGradient id="g-door" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#ff9ec9"/>
+            <stop offset="1" stop-color="#ff66b3"/>
+          </linearGradient>
+          <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.25"/>
+          </filter>
+        </defs>
+
+        <!-- Door panel -->
+        <g filter="url(#shadow)">
+          <rect x="20" y="20" rx="20" ry="20" width="360" height="660" fill="url(#g-door)" stroke="#ffb0d9" stroke-width="6"/>
+        </g>
+
+        <!-- Panels -->
+        <g fill="none" stroke="#ffd6ec" stroke-width="6" opacity="0.9">
+          <rect x="60" y="80" rx="10" ry="10" width="280" height="120"/>
+          <rect x="60" y="220" rx="10" ry="10" width="280" height="260"/>
+          <rect x="60" y="500" rx="10" ry="10" width="280" height="80"/>
+        </g>
+
+        <!-- Knob -->
+        <circle cx="320" cy="360" r="18" fill="#ffd27a" stroke="#e6b24d" stroke-width="3"/>
+        <circle cx="318" cy="356" r="6" fill="#fff" opacity="0.6"/>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    const select = document.getElementById("location");
+    const bg = document.getElementById("door-bg");
+    const doorEl = document.getElementById("door");
+    const btn = document.getElementById("toggle");
+
+    // Load ảnh mặc định
+    bg.style.backgroundImage = `url(${select.value})`;
+
+    // Đổi ảnh khi chọn địa điểm
+    select.addEventListener("change", function() {
+      bg.style.backgroundImage = `url(${this.value})`;
+    });
+
+    // Nút bấm mở/đóng cửa
+    btn.addEventListener("click", () => {
+      doorEl.classList.toggle("open");
+    });
+  </script>
+</body>
+</html>
